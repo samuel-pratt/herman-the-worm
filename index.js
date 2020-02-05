@@ -25,7 +25,20 @@ app.use(bodyParser.json());
  */
 
 const findNearestFood = data => {
-  return [0, 0];
+  const snake_head = data.you.body[0];
+  const food = data.board.food;
+
+  const distances = food.map(item => {
+    return Math.sqrt(
+      (snake_head[0] - item[0]) * (snake_head[0] - item[0]) +
+        (snake_head[1] - item[1]) * (snake_head[1] - item[1])
+    );
+  });
+
+  const shortestDistance = Math.min(...distances);
+  const index = distance.indexOf(shortestDistance);
+
+  return food[index];
 };
 
 const goTo = (start, end) => {
@@ -60,7 +73,7 @@ app.post("/move", (request, response) => {
     const path = goTo(request.body[0], nearest_food);
     move = path[0]; // This isn't quite right, needs to figure out a direction
   } else if (request.you.health >= 50) {
-    return curl();
+    return response.json(curl(request));
   } else if (request.you.health < 50) {
     const nearest_food = findNearestFood(request);
     const path = goTo(request.body[0], nearest_food);
@@ -71,7 +84,8 @@ app.post("/move", (request, response) => {
 });
 
 app.post("/end", (request, response) => {
-  // Perform cleanup, response ignored
+  // Perform cleanup and logging, response ignored
+
   return response;
 });
 
