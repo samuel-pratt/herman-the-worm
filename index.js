@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 // API info at: https://docs.battlesnake.com/snake-api
 
 app.post("/start", (request, response) => {
-  // Respond with snake data: { color: 'Red', headType: "regular", tailType: "pixel"}
+  // Respond with snake data: { color: 'Red', headType: "regular", tailType: "regular"}
   const data = {
     color: "#0F0F0F"
   };
