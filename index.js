@@ -24,6 +24,18 @@ app.use(bodyParser.json());
  *    returns the next move along an A* path towards coords
  */
 
+const findNearestFood = data => {
+  return [0, 0];
+};
+
+const goTo = (start, end) => {
+  return [0, 0];
+};
+
+const curl = data => {
+  return { move: "up" };
+};
+
 // API info at: https://docs.battlesnake.com/snake-api
 
 app.post("/start", (request, response) => {
@@ -39,9 +51,21 @@ app.post("/start", (request, response) => {
 
 app.post("/move", (request, response) => {
   // Respond with move data: { move: "left" }
-  const move = {
+  let move = {
     move: "left"
   };
+
+  if (request.you.body.length < 8) {
+    const nearest_food = findNearestFood(request);
+    const path = goTo(request.body[0], nearest_food);
+    move = path[0]; // This isn't quite right, needs to figure out a direction
+  } else if (request.you.health >= 50) {
+    return curl();
+  } else if (request.you.health < 50) {
+    const nearest_food = findNearestFood(request);
+    const path = goTo(request.body[0], nearest_food);
+    move = path[0];
+  }
 
   return response.json(move);
 });
