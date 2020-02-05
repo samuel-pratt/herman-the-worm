@@ -46,13 +46,15 @@ const goTo = (start, end) => {
 };
 
 const curl = data => {
+  const length = data.you.body.length;
+
   return { move: "up" };
 };
 
 // API info at: https://docs.battlesnake.com/snake-api
 
 app.post("/start", (request, response) => {
-  // Respond with snake data: { color: 'Red', headType: "regular", tailType: "regular"}
+  // Respond with snake customization data
   const data = {
     color: "#0F0F0F",
     headType: "safe",
@@ -63,7 +65,7 @@ app.post("/start", (request, response) => {
 });
 
 app.post("/move", (request, response) => {
-  // Respond with move data: { move: "left" }
+  // Respond with move data
   let move = {
     move: "left"
   };
@@ -71,12 +73,14 @@ app.post("/move", (request, response) => {
   if (request.you.body.length < 8) {
     const nearest_food = findNearestFood(request);
     const path = goTo(request.body[0], nearest_food);
-    move = path[0]; // This isn't quite right, needs to figure out a direction
+    // This isn't quite right, needs to figure out a direction
+    move = path[0];
   } else if (request.you.health >= 50) {
     return response.json(curl(request));
   } else if (request.you.health < 50) {
     const nearest_food = findNearestFood(request);
     const path = goTo(request.body[0], nearest_food);
+    // This isn't quite right, needs to figure out a direction
     move = path[0];
   }
 
@@ -85,12 +89,11 @@ app.post("/move", (request, response) => {
 
 app.post("/end", (request, response) => {
   // Perform cleanup and logging, response ignored
-
   return response;
 });
 
 app.post("/ping", (request, response) => {
-  // Wakes up app if asleep, repsonse ignored
+  // Wakes up app if asleep, response ignored
   return response;
 });
 
