@@ -9,7 +9,7 @@ app.enable("verbose errors");
 app.use(logger("dev"));
 app.use(bodyParser.json());
 
-// API infor at: https://docs.battlesnake.com/snake-api
+// API info at: https://docs.battlesnake.com/snake-api
 
 app.post("/start", (request, response) => {
   // Respond with snake data: { color: 'Red', headType: "regular", tailType: "pixel"}
