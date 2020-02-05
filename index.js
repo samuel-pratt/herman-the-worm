@@ -9,8 +9,10 @@ app.enable("verbose errors");
 app.use(logger("dev"));
 app.use(bodyParser.json());
 
+// API infor at: https://docs.battlesnake.com/snake-api
+
 app.post("/start", (request, response) => {
-  // Response data
+  // Respond with snake data: { color: 'Red', headType: "regular", tailType: "pixel"}
   const data = {
     color: "#0F0F0F"
   };
@@ -19,6 +21,7 @@ app.post("/start", (request, response) => {
 });
 
 app.post("/move", (request, response) => {
+  // Respond with move data: { move: "left" }
   const move = {
     move: "left"
   };
@@ -26,6 +29,10 @@ app.post("/move", (request, response) => {
   return response.json(move);
 });
 
-app.post("/end", (request, response) => {});
+app.post("/end", (request, response) => {
+  // Perform cleanup, response ignored
+});
 
-app.post("/ping", (request, response) => {});
+app.post("/ping", (request, response) => {
+  // Wakes up app if asleep, repsonse ignored
+});
