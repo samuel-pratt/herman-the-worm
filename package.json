@@ -13,7 +13,8 @@
     "url": "https://github.com/samuel-pratt/battlesnake-2020.git"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "morgan": "^1.9.1"
   },
   "engines": {
     "node": "12.13.0",
