@@ -38,3 +38,7 @@ app.post("/end", (request, response) => {
 app.post("/ping", (request, response) => {
   // Wakes up app if asleep, repsonse ignored
 });
+
+app.listen(app.get("port"), () => {
+  console.log("Server listening on port %s", app.get("port"));
+});
