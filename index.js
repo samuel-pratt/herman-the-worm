@@ -111,6 +111,8 @@ app.post("/move", (request, response) => {
 
   let temp;
 
+  console.log(nearest_food);
+
   easystar.setGrid(board);
   easystar.setAcceptableTiles([0]);
   easystar.findPath(
