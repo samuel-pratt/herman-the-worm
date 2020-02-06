@@ -126,7 +126,7 @@ app.post("/move", (request, response) => {
     }
   );
 
-  easystar.calculate();
+  setTimeout(easystar.calculate(), 100);
 
   console.log(food_path);
 
