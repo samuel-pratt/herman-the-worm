@@ -120,7 +120,10 @@ app.post("/move", (request, response) => {
     [snakeHead.x + 1, snakeHead.y - 1],
     [snakeHead.x + 1, snakeHead.y + 1]
   ];
-
+  console.log(checkUp);
+  console.log(checkDown);
+  console.log(checkLeft);
+  console.log(checkRight);
   // None of this works, fix it
   const snakeHeads = request.body.board.snakes.map(snake => {
     return [snake.body[0].x, snake.body[0].y];
@@ -128,32 +131,24 @@ app.post("/move", (request, response) => {
   snakeHeads.splice(snakeHeads.indexOf(snakeHead), 1);
   snakeHeads.forEach(head => {
     checkUp.forEach(check => {
-      console.log(head);
-      console.log(check);
       if (head === check) {
         board[snakeHead.x][snakeHead.y - 1] = 1;
       }
     });
 
     checkDown.forEach(check => {
-      console.log(head);
-      console.log(check);
       if (head === check) {
         board[snakeHead.x][snakeHead.y + 1] = 1;
       }
     });
 
     checkLeft.forEach(check => {
-      console.log(head);
-      console.log(check);
       if (head === check) {
         board[snakeHead.x - 1][snakeHead.y] = 1;
       }
     });
 
     checkRight.forEach(check => {
-      console.log(head);
-      console.log(check);
       if (head === check) {
         board[snakeHead.x + 1][snakeHead.y] = 1;
       }
