@@ -121,10 +121,14 @@ app.post("/move", (request, response) => {
       if (path === null) {
         console.log("Path was not found.");
       } else {
-        food_path = path;
+        setFoodPath(path);
       }
     }
   );
+
+  const setFoodPath = temp => {
+    food_path = temp;
+  };
 
   easystar.calculate();
 
