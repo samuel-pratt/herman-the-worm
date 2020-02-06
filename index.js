@@ -124,31 +124,27 @@ app.post("/move", (request, response) => {
   request.body.board.snakes.forEach(snake => {
     head = [snake.body[0].x, snake.body[0].y];
     checkUp.forEach(option => {
-      console.log("Check up: head:" + head + ", option:" + option);
       if (head[0] == option[0] && head[1] == option[1]) {
         board[option[0]][option[1]] = 1;
-        console.log("there is a snake head up");
+        console.log("There is a snake head up");
       }
     });
     checkDown.forEach(option => {
-      console.log("Check down: head:" + head + ", option:" + option);
       if (head[0] == option[0] && head[1] == option[1]) {
         board[option[0]][option[1]] = 1;
-        console.log("there is a snake head down");
+        console.log("There is a snake head down");
       }
     });
     checkLeft.forEach(option => {
-      console.log("Check left: head:" + head + ", option:" + option);
       if (head[0] == option[0] && head[1] == option[1]) {
         board[option[0]][option[1]] = 1;
-        console.log("there is a snake head left");
+        console.log("There is a snake head left");
       }
     });
     checkRight.forEach(option => {
-      console.log("Check right: head:" + head + ", option:" + option);
       if (head[0] == option[0] && head[1] == option[1]) {
         board[option[0]][option[1]] = 1;
-        console.log("there is a snake head right");
+        console.log("There is a snake head right");
       }
     });
   });
@@ -183,7 +179,7 @@ app.post("/move", (request, response) => {
   } else if (food_path[1].y < snakeHead.y) {
     move.move = "up";
   }
-
+  console.log("MOVE: " + move.move);
   return response.json(move);
 });
 
