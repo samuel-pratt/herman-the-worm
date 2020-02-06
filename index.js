@@ -100,7 +100,7 @@ app.post("/move", (request, response) => {
     .map(() => Array(request.body.board.width).fill(0));
 
   request.body.board.snakes.forEach(snake =>
-    snake.forEach(element => (board[element.x][element.y] = 1))
+    snake.body.forEach(element => (board[element.x][element.y] = 1))
   );
 
   console.log(board);
