@@ -125,6 +125,7 @@ app.post("/move", (request, response) => {
     return [snake.body[0].x, snake.body[0].y];
   });
   snakeHeads.splice(snakeHeads.indexOf(snakeHead), 1);
+  console.log(snakeHeads);
   snakeHeads.forEach(item => {
     if (checkUp.indexOf(item) != -1) {
       board[(snakeHead.x, snakeHead.y - 1)] = 1;
