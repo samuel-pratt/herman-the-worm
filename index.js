@@ -29,11 +29,10 @@ app.use(bodyParser.json());
  */
 
 const findNearestFood = data => {
-  console.log(data.you);
-  const snake_head = data.body.you.body[0];
-  const food = data.body.board.food;
+  const snake_head = data.you.body[0];
+  const food = data.board.food;
 
-  if (food === []) return null; // No food on board
+  if (food === {}) return null; // No food on board
 
   const distances = food.map(item => {
     return Math.sqrt(
@@ -53,7 +52,7 @@ const goTo = (start, end, graph) => {
 };
 
 const curl = data => {
-  const length = data.body.you.body.length;
+  const length = data.you.body.length;
 
   if (length < 4) {
     // 2x2 square, perimeter 4
@@ -88,20 +87,20 @@ app.post("/move", (request, response) => {
     move: "left"
   };
 
-  const nearest_food = findNearestFood(request.body);
+  const nearest_food = findNearestFood(request);
 
   if (nearest_food === null) {
-    return response.json(curl(request.body));
+    return response.json(curl(request));
   }
 
-  const snake_head = request.body.you.body[0];
+  const snake_head = request.you.body[0];
 
-  let board = Array(request.body.board.height)
+  let board = Array(request.board.height)
     .fill()
-    .map(() => Array(request.body.board.width).fill(0));
+    .map(() => Array(request.board.width).fill(0));
 
-  request.body.board.snakes.forEach(snake =>
-    snake.forEach(element => (board[element[0]][element[1]] = 1))
+  request.board.snakes.forEach(snake =>
+    snake.forEach(element => (board[element.x][element.y] = 1))
   );
 
   console.log(board);
