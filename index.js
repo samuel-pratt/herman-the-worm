@@ -64,6 +64,7 @@ app.post("/start", (request, response) => {
  * TODO
  * What to do when there's no food
  * What to do when theres no path
+ * What to do when the nearest food has a path, but there is other food available
  * Check one move to remove dangerous options
  */
 app.post("/move", (request, response) => {
