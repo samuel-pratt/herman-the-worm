@@ -128,7 +128,7 @@ app.post("/move", (request, response) => {
 
   easystar.calculate();
 
-  console.log(food_path[0]);
+  console.log(food_path);
   console.log(snake_head);
 
   if (food_path[0].x < snake_head.x) {
