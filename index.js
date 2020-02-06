@@ -29,7 +29,7 @@ app.use(bodyParser.json());
  */
 
 const findNearestFood = data => {
-  console.log(data);
+  console.log(data.you);
   const snake_head = data.body.you.body[0];
   const food = data.body.board.food;
 
