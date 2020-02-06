@@ -127,24 +127,36 @@ app.post("/move", (request, response) => {
       if (head[0] == option[0] && head[1] == option[1]) {
         board[snakeHead.y][snakeHead.x - 1] = 1;
         console.log("There is a snake head up");
+        if (board[snakeHead.y + 1][snakeHead.x] == nearest_food) {
+          console.log("There is food up");
+        }
       }
     });
     checkDown.forEach(option => {
       if (head[0] == option[0] && head[1] == option[1]) {
         board[snakeHead.y][snakeHead.x + 1] = 1;
         console.log("There is a snake head down");
+        if (board[snakeHead.y + 1][snakeHead.x] == nearest_food) {
+          console.log("There is food down");
+        }
       }
     });
     checkLeft.forEach(option => {
       if (head[0] == option[0] && head[1] == option[1]) {
         board[snakeHead.y - 1][snakeHead.x] = 1;
         console.log("There is a snake head left");
+        if (board[snakeHead.y + 1][snakeHead.x] == nearest_food) {
+          console.log("There is food left");
+        }
       }
     });
     checkRight.forEach(option => {
       if (head[0] == option[0] && head[1] == option[1]) {
         board[snakeHead.y + 1][snakeHead.x] = 1;
         console.log("There is a snake head right");
+        if (board[snakeHead.y + 1][snakeHead.x] == nearest_food) {
+          console.log("There is food right");
+        }
       }
     });
   });
