@@ -87,6 +87,10 @@ app.post("/move", (request, response) => {
     move: "left"
   };
 
+  if (request.body.turn === 1) {
+    return response.json(move);
+  }
+
   const nearest_food = findNearestFood(request.body);
 
   if (nearest_food === null) {
