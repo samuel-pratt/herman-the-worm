@@ -120,10 +120,10 @@ app.post("/move", (request, response) => {
     [snakeHead.x + 1, snakeHead.y - 1],
     [snakeHead.x + 1, snakeHead.y + 1]
   ];
-  console.log(checkUp);
-  console.log(checkDown);
-  console.log(checkLeft);
-  console.log(checkRight);
+  console.log([snakeHead.x, snakeHead.y - 1]);
+  console.log([snakeHead.x, snakeHead.y + 1]);
+  console.log([snakeHead.x - 1, snakeHead.y]);
+  console.log([snakeHead.x + 1, snakeHead.y]);
   // None of this works, fix it
   const snakeHeads = request.body.board.snakes.map(snake => {
     return [snake.body[0].x, snake.body[0].y];
