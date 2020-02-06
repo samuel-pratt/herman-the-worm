@@ -13,20 +13,6 @@ app.enable("verbose errors");
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 let food_path = [];
-/*
- * TODO:
- * Create log file that stores:
- *    gameId, turn, number of other snakes, health, length of snake on /end
- * Create game loop that calls the following functions depending on health and turn
- * curl():
- *    function that when called returns next move to curl up in a circle
- * findNearestFood():
- *    function that calculates distances to food and returns coords of closest one
- * goTo():
- *    function that when called returns a move
- *    accepts a pair of coordinates as parameters
- *    returns the next move along an A* path towards coords
- */
 
 const findNearestFood = data => {
   const snake_head = data.you.body[0];
@@ -45,10 +31,6 @@ const findNearestFood = data => {
   const index = distances.indexOf(shortestDistance);
 
   return food[index];
-};
-
-const goTo = (start, end, graph) => {
-  return [0, 0];
 };
 
 const curl = data => {
@@ -81,6 +63,12 @@ app.post("/start", (request, response) => {
   return response.json(data);
 });
 
+/*
+ * TODO
+ * What to do when there's no food
+ * What to do when theres no path
+ * Check one move to remove dangerous options
+ */
 app.post("/move", (request, response) => {
   // Respond with move data
   let move = {
@@ -108,6 +96,8 @@ app.post("/move", (request, response) => {
   // Add self to board, not including head
   const self = request.body.you.body.slice(1);
   self.forEach(element => (board[element.y][element.x] = 1));
+
+  // Find path
   easystar.enableSync();
   easystar.setGrid(board);
   easystar.setAcceptableTiles([0]);
