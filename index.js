@@ -120,29 +120,29 @@ app.post("/move", (request, response) => {
     [snakeHead.x + 1, snakeHead.y - 1],
     [snakeHead.x + 1, snakeHead.y + 1]
   ];
-  console.log(checkUp);
-  console.log(checkDown);
-  console.log(checkLeft);
-  console.log(checkRight);
 
   request.body.board.snakes.forEach(snake => {
     head = snake[0];
     checkUp.forEach(option => {
+      console.log("Check up: head:" + head + ", option:" + option);
       if (head === option) {
         console.log("there is a snake head up");
       }
     });
     checkDown.forEach(option => {
+      console.log("Check down: head:" + head + ", option:" + option);
       if (head === option) {
         console.log("there is a snake head down");
       }
     });
     checkLeft.forEach(option => {
+      console.log("Check left: head:" + head + ", option:" + option);
       if (head === option) {
         console.log("there is a snake head left");
       }
     });
     checkRight.forEach(option => {
+      console.log("Check right: head:" + head + ", option:" + option);
       if (head === option) {
         console.log("there is a snake head right");
       }
