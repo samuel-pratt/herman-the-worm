@@ -14,16 +14,13 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 let food_path = [];
 
-const findNearestFood = data => {
-  const snake_head = data.you.body[0];
-  const food = data.board.food;
-
-  if (food === {}) return null; // No food on board
+const findNearestFood = (food, snakeHead) => {
+  if (food === []) return null; // No food on board
 
   const distances = food.map(item => {
     return Math.sqrt(
-      (snake_head.x - item.x) * (snake_head.x - item.x) +
-        (snake_head.y - item.y) * (snake_head.y - item.y)
+      (snakeHead.x - item.x) * (snakeHead.x - item.x) +
+        (snakeHead.y - item.y) * (snakeHead.y - item.y)
     );
   });
 
@@ -75,13 +72,13 @@ app.post("/move", (request, response) => {
     move: "left"
   };
 
-  const nearest_food = findNearestFood(request.body);
+  const nearest_food = findNearestFood(data.board.food, data.you.body[0]);
 
   if (nearest_food === null) {
     return response.json(move);
   }
 
-  const snake_head = request.body.you.body[0];
+  const snakeHead = request.body.you.body[0];
 
   // Create empty board array
   let board = Array(request.body.board.height)
@@ -97,14 +94,107 @@ app.post("/move", (request, response) => {
   const self = request.body.you.body.slice(1);
   self.forEach(element => (board[element.y][element.x] = 1));
 
+  // Add potentially dangerous paths as obstacles
+  const checkUp = [
+    [snakeHead.x, snakeHead.y - 2],
+    [snakeHead.x - 1, snakeHead.y - 1],
+    [snakeHead.x - 1, snakeHead.y - 1]
+  ];
+  const checkDown = [
+    [snakeHead.x, snakeHead.y + 2],
+    [snakeHead.x - 1, snakeHead.y + 1],
+    [snakeHead.x - 1, snakeHead.y + 1]
+  ];
+  const checkLeft = [
+    [snakeHead.x - 2, snakeHead.y],
+    [snakeHead.x - 1, snakeHead.y - 1],
+    [snakeHead.x - 1, snakeHead.y + 1]
+  ];
+  const checkRight = [
+    [snakeHead.x + 2, snakeHead.y],
+    [snakeHead.x + 1, snakeHead.y - 1],
+    [snakeHead.x + 1, snakeHead.y + 1]
+  ];
+
+  const snakeHeads = request.body.board.snakes.map(snake => {
+    return [snake.body[0].x, snake.body[0].y];
+  });
+
+  snakeHeads.forEach(item => {
+    if (checkUp.indexOf(item) != -1) {
+      board[(snakeHead.x, snakeHead.y - 1)] = 1;
+      if ({ x: snakeHead.x, y: snakeHead.y - 1 } === nearest_food) {
+        nearest_food = findNearestFood(
+          request.body.board.food(
+            splice(
+              request.body.board.food.indexOf(
+                { x: snakeHead.x, y: snakeHead.y - 1 },
+                1
+              )
+            )
+          ),
+          snakeHead
+        );
+      }
+    }
+    if (checkDown.indexOf(item) != -1) {
+      board[(snakeHead.x, snakeHead.y + 1)] = 1;
+      if ({ x: snakeHead.x, y: snakeHead.y + 1 } === nearest_food) {
+        nearest_food = findNearestFood(
+          request.body.board.food(
+            splice(
+              request.body.board.food.indexOf(
+                { x: snakeHead.x, y: snakeHead.y + 1 },
+                1
+              )
+            )
+          ),
+          snakeHead
+        );
+      }
+    }
+    if (checkLeft.indexOf(item) != -1) {
+      board[(snakeHead.x - 1, snakeHead.y)] = 1;
+      if ({ x: snakeHead.x - 1, y: snakeHead.y } === nearest_food) {
+        nearest_food = findNearestFood(
+          request.body.board.food(
+            splice(
+              request.body.board.food.indexOf(
+                { x: snakeHead.x - 1, y: snakeHead.y },
+                1
+              )
+            )
+          ),
+          snakeHead
+        );
+      }
+    }
+    if (checkRight.indexOf(item) != -1) {
+      board[(snakeHead.x + 1, snakeHead.y)] = 1;
+      if ({ x: snakeHead.x + 1, y: snakeHead.y } === nearest_food) {
+        nearest_food = findNearestFood(
+          request.body.board.food(
+            splice(
+              request.body.board.food.indexOf(
+                { x: snakeHead.x + 1, y: snakeHead.y },
+                1
+              )
+            )
+          ),
+          snakeHead
+        );
+      }
+    }
+  });
+
   // Find path
   easystar.enableSync();
   easystar.setGrid(board);
   easystar.setAcceptableTiles([0]);
 
   easystar.findPath(
-    snake_head.x,
-    snake_head.y,
+    snakeHead.x,
+    snakeHead.y,
     nearest_food.x,
     nearest_food.y,
     function(path) {
@@ -119,15 +209,15 @@ app.post("/move", (request, response) => {
   easystar.calculate();
 
   console.log(food_path);
-  console.log(snake_head);
+  console.log(snakeHead);
 
-  if (food_path[1].x > snake_head.x) {
+  if (food_path[1].x > snakeHead.x) {
     move.move = "right";
-  } else if (food_path[1].x < snake_head.x) {
+  } else if (food_path[1].x < snakeHead.x) {
     move.move = "left";
-  } else if (food_path[1].y > snake_head.y) {
+  } else if (food_path[1].y > snakeHead.y) {
     move.move = "down";
-  } else if (food_path[1].y < snake_head.y) {
+  } else if (food_path[1].y < snakeHead.y) {
     move.move = "up";
   }
 
