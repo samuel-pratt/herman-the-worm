@@ -131,13 +131,13 @@ app.post("/move", (request, response) => {
   console.log(food_path[0]);
   console.log(snake_head);
 
-  if (food_path[0].x < food_path[1].x) {
+  if (food_path[0].x > snake_head.x) {
     move.move = "right";
-  } else if (food_path[0].x > food_path[1].x) {
+  } else if (food_path[0].x < snake_head.x) {
     move.move = "left";
-  } else if (food_path[0].y < food_path[1].y) {
+  } else if (food_path[0].y > snake_head.y) {
     move.move = "down";
-  } else if (food_path[0].y > food_path[1].y) {
+  } else if (food_path[0].y < snake_head.y) {
     move.move = "up";
   }
 
