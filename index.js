@@ -103,12 +103,12 @@ app.post("/move", (request, response) => {
   const checkUp = [
     [snakeHead.x, snakeHead.y - 2],
     [snakeHead.x - 1, snakeHead.y - 1],
-    [snakeHead.x - 1, snakeHead.y - 1]
+    [snakeHead.x + 1, snakeHead.y - 1]
   ];
   const checkDown = [
     [snakeHead.x, snakeHead.y + 2],
     [snakeHead.x - 1, snakeHead.y + 1],
-    [snakeHead.x - 1, snakeHead.y + 1]
+    [snakeHead.x + 1, snakeHead.y + 1]
   ];
   const checkLeft = [
     [snakeHead.x - 2, snakeHead.y],
