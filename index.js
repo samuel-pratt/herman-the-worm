@@ -103,8 +103,6 @@ app.post("/move", (request, response) => {
     snake.body.forEach(element => (board[element.x][element.y] = 1))
   );
 
-  console.log(board);
-
   return response.json(move);
 });
 
