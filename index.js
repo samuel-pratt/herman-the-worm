@@ -128,24 +128,32 @@ app.post("/move", (request, response) => {
   snakeHeads.splice(snakeHeads.indexOf(snakeHead), 1);
   snakeHeads.forEach(head => {
     checkUp.forEach(check => {
+      console.log(head);
+      console.log(check);
       if (head === check) {
         board[snakeHead.x][snakeHead.y - 1] = 1;
       }
     });
 
     checkDown.forEach(check => {
+      console.log(head);
+      console.log(check);
       if (head === check) {
         board[snakeHead.x][snakeHead.y + 1] = 1;
       }
     });
 
     checkLeft.forEach(check => {
+      console.log(head);
+      console.log(check);
       if (head === check) {
         board[snakeHead.x - 1][snakeHead.y] = 1;
       }
     });
 
     checkRight.forEach(check => {
+      console.log(head);
+      console.log(check);
       if (head === check) {
         board[snakeHead.x + 1][snakeHead.y] = 1;
       }
