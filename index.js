@@ -152,6 +152,8 @@ app.post("/move", (request, response) => {
     });
   });
 
+  console.log(board);
+
   // Find path
   easystar.enableSync();
   easystar.setGrid(board);
