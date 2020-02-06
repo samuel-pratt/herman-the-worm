@@ -128,10 +128,11 @@ app.post("/move", (request, response) => {
         nearest_food = findNearestFood(
           request.body.board.food(
             splice(
-              request.body.board.food.indexOf(
-                { x: snakeHead.x, y: snakeHead.y - 1 },
-                1
-              )
+              request.body.board.food.indexOf({
+                x: snakeHead.x,
+                y: snakeHead.y - 1
+              }),
+              1
             )
           ),
           snakeHead
@@ -144,10 +145,11 @@ app.post("/move", (request, response) => {
         nearest_food = findNearestFood(
           request.body.board.food(
             splice(
-              request.body.board.food.indexOf(
-                { x: snakeHead.x, y: snakeHead.y + 1 },
-                1
-              )
+              request.body.board.food.indexOf({
+                x: snakeHead.x,
+                y: snakeHead.y + 1
+              }),
+              1
             )
           ),
           snakeHead
@@ -160,10 +162,11 @@ app.post("/move", (request, response) => {
         nearest_food = findNearestFood(
           request.body.board.food(
             splice(
-              request.body.board.food.indexOf(
-                { x: snakeHead.x - 1, y: snakeHead.y },
-                1
-              )
+              request.body.board.food.indexOf({
+                x: snakeHead.x - 1,
+                y: snakeHead.y
+              }),
+              1
             )
           ),
           snakeHead
@@ -176,10 +179,11 @@ app.post("/move", (request, response) => {
         nearest_food = findNearestFood(
           request.body.board.food(
             splice(
-              request.body.board.food.indexOf(
-                { x: snakeHead.x + 1, y: snakeHead.y },
-                1
-              )
+              request.body.board.food.indexOf({
+                x: snakeHead.x + 1,
+                y: snakeHead.y
+              }),
+              1
             )
           ),
           snakeHead
