@@ -111,7 +111,8 @@ app.post("/move", (request, response) => {
 
   easystar.setGrid(board);
   easystar.setAcceptableTiles([0]);
-  let food_path = easystar.findPath(
+  let food_path = [];
+  easystar.findPath(
     snake_head.x,
     snake_head.y,
     nearest_food.x,
@@ -120,7 +121,7 @@ app.post("/move", (request, response) => {
       if (path === null) {
         console.log("Path was not found.");
       } else {
-        return path;
+        food_path = path;
       }
     }
   );
