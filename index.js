@@ -62,10 +62,11 @@ app.post("/start", (request, response) => {
 
 /*
  * TODO
- * What to do when there's no food
- * What to do when theres no path
- * What to do when the nearest food has no path, but there is other food available
- * Check one move to remove dangerous options
+ * Make function to sort all food in order of distance
+ * Place fake walls on dangerous spots
+ * Check all paths instead of one
+ * When there is no path, don't die immediately
+ *
  */
 app.post("/move", (request, response) => {
   // Respond with move data
@@ -125,76 +126,30 @@ app.post("/move", (request, response) => {
     return [snake.body[0].x, snake.body[0].y];
   });
   snakeHeads.splice(snakeHeads.indexOf(snakeHead), 1);
-  console.log(snakeHeads);
-  snakeHeads.forEach(item => {
-    if (checkUp.indexOf(item) != -1) {
-      board[(snakeHead.x, snakeHead.y - 1)] = 1;
-      if ({ x: snakeHead.x, y: snakeHead.y - 1 } === nearest_food) {
-        nearest_food = findNearestFood(
-          request.body.board.food(
-            splice(
-              ...request.body.board.food.indexOf({
-                x: snakeHead.x,
-                y: snakeHead.y - 1
-              }),
-              1
-            )
-          ),
-          snakeHead
-        );
+  snakeHeads.forEach(head => {
+    checkUp.forEach(check => {
+      if (head === check) {
+        board[(head[0], head[1])] = 1;
       }
-    }
-    if (checkDown.indexOf(item) != -1) {
-      board[(snakeHead.x, snakeHead.y + 1)] = 1;
-      if ({ x: snakeHead.x, y: snakeHead.y + 1 } === nearest_food) {
-        nearest_food = findNearestFood(
-          request.body.board.food(
-            splice(
-              ...request.body.board.food.indexOf({
-                x: snakeHead.x,
-                y: snakeHead.y + 1
-              }),
-              1
-            )
-          ),
-          snakeHead
-        );
+    });
+
+    checkDown.forEach(check => {
+      if (head === check) {
+        board[(head[0], head[1])] = 1;
       }
-    }
-    if (checkLeft.indexOf(item) != -1) {
-      board[(snakeHead.x - 1, snakeHead.y)] = 1;
-      if ({ x: snakeHead.x - 1, y: snakeHead.y } === nearest_food) {
-        nearest_food = findNearestFood(
-          ...request.body.board.food(
-            splice(
-              request.body.board.food.indexOf({
-                x: snakeHead.x - 1,
-                y: snakeHead.y
-              }),
-              1
-            )
-          ),
-          snakeHead
-        );
+    });
+
+    checkLeft.forEach(check => {
+      if (head === check) {
+        board[(head[0], head[1])] = 1;
       }
-    }
-    if (checkRight.indexOf(item) != -1) {
-      board[(snakeHead.x + 1, snakeHead.y)] = 1;
-      if ({ x: snakeHead.x + 1, y: snakeHead.y } === nearest_food) {
-        nearest_food = findNearestFood(
-          ...request.body.board.food(
-            splice(
-              request.body.board.food.indexOf({
-                x: snakeHead.x + 1,
-                y: snakeHead.y
-              }),
-              1
-            )
-          ),
-          snakeHead
-        );
+    });
+
+    checkRight.forEach(check => {
+      if (head === check) {
+        board[(head[0], head[1])] = 1;
       }
-    }
+    });
   });
 
   // Find path
@@ -217,9 +172,6 @@ app.post("/move", (request, response) => {
   );
 
   easystar.calculate();
-
-  console.log(food_path);
-  console.log(snakeHead);
 
   if (food_path[1].x > snakeHead.x) {
     move.move = "right";
