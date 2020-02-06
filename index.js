@@ -125,25 +125,25 @@ app.post("/move", (request, response) => {
     head = [snake.body[0].x, snake.body[0].y];
     checkUp.forEach(option => {
       if (head[0] == option[0] && head[1] == option[1]) {
-        board[option[0]][option[1]] = 1;
+        board[snakeHead.x][snakeHead.y - 1] = 1;
         console.log("There is a snake head up");
       }
     });
     checkDown.forEach(option => {
       if (head[0] == option[0] && head[1] == option[1]) {
-        board[option[0]][option[1]] = 1;
+        board[snakeHead.x][snakeHead.y + 1] = 1;
         console.log("There is a snake head down");
       }
     });
     checkLeft.forEach(option => {
       if (head[0] == option[0] && head[1] == option[1]) {
-        board[option[0]][option[1]] = 1;
+        board[snakeHead.x - 1][snakeHead.y] = 1;
         console.log("There is a snake head left");
       }
     });
     checkRight.forEach(option => {
       if (head[0] == option[0] && head[1] == option[1]) {
-        board[option[0]][option[1]] = 1;
+        board[snakeHead.x + 1][snakeHead.y] = 1;
         console.log("There is a snake head right");
       }
     });
