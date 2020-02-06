@@ -29,7 +29,6 @@ app.use(bodyParser.json());
  */
 
 const findNearestFood = data => {
-  console.log(data);
   const snake_head = data.you.body[0];
   const food = data.board.food;
 
@@ -43,7 +42,7 @@ const findNearestFood = data => {
   });
 
   const shortestDistance = Math.min(...distances);
-  const index = distance.indexOf(shortestDistance);
+  const index = distances.indexOf(shortestDistance);
 
   return food[index];
 };
@@ -91,7 +90,7 @@ app.post("/move", (request, response) => {
   const nearest_food = findNearestFood(request.body);
 
   if (nearest_food === null) {
-    return response.json(curl(request));
+    return response.json(move);
   }
 
   const snake_head = request.you.body[0];
