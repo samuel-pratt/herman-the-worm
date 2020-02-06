@@ -129,25 +129,25 @@ app.post("/move", (request, response) => {
   snakeHeads.forEach(head => {
     checkUp.forEach(check => {
       if (head === check) {
-        board[(head[0], head[1])] = 1;
+        board[snakeHead.x][snakeHead.y - 1] = 1;
       }
     });
 
     checkDown.forEach(check => {
       if (head === check) {
-        board[(head[0], head[1])] = 1;
+        board[snakeHead.x][snakeHead.y + 1] = 1;
       }
     });
 
     checkLeft.forEach(check => {
       if (head === check) {
-        board[(head[0], head[1])] = 1;
+        board[snakeHead.x - 1][snakeHead.y] = 1;
       }
     });
 
     checkRight.forEach(check => {
       if (head === check) {
-        board[(head[0], head[1])] = 1;
+        board[snakeHead.x + 1][snakeHead.y] = 1;
       }
     });
   });
