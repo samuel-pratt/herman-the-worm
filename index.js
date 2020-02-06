@@ -127,7 +127,10 @@ app.post("/move", (request, response) => {
       if (head[0] == option[0] && head[1] == option[1]) {
         board[snakeHead.y][snakeHead.x - 1] = 1;
         console.log("There is a snake head up");
-        if (board[snakeHead.y + 1][snakeHead.x] == nearest_food) {
+        if (
+          snakeHead.y + 1 == nearest_food.x &&
+          snakeHead.x == nearest_food.y
+        ) {
           console.log("There is food up");
         }
       }
@@ -136,7 +139,10 @@ app.post("/move", (request, response) => {
       if (head[0] == option[0] && head[1] == option[1]) {
         board[snakeHead.y][snakeHead.x + 1] = 1;
         console.log("There is a snake head down");
-        if (board[snakeHead.y + 1][snakeHead.x] == nearest_food) {
+        if (
+          snakeHead.y + 1 == nearest_food.x &&
+          snakeHead.x == nearest_food.y
+        ) {
           console.log("There is food down");
         }
       }
@@ -145,7 +151,10 @@ app.post("/move", (request, response) => {
       if (head[0] == option[0] && head[1] == option[1]) {
         board[snakeHead.y - 1][snakeHead.x] = 1;
         console.log("There is a snake head left");
-        if (board[snakeHead.y + 1][snakeHead.x] == nearest_food) {
+        if (
+          snakeHead.y + 1 == nearest_food.x &&
+          snakeHead.x == nearest_food.y
+        ) {
           console.log("There is food left");
         }
       }
@@ -154,7 +163,10 @@ app.post("/move", (request, response) => {
       if (head[0] == option[0] && head[1] == option[1]) {
         board[snakeHead.y + 1][snakeHead.x] = 1;
         console.log("There is a snake head right");
-        if (board[snakeHead.y + 1][snakeHead.x] == nearest_food) {
+        if (
+          snakeHead.y + 1 == nearest_food.x &&
+          snakeHead.x == nearest_food.y
+        ) {
           console.log("There is food right");
         }
       }
