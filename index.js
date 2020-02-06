@@ -1,6 +1,8 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const morgan = require("morgan");
+const easystarjs = require("easystarjs");
+const easystar = new easystarjs.js();
 
 const app = express();
 
@@ -43,10 +45,6 @@ const findNearestFood = data => {
   const index = distance.indexOf(shortestDistance);
 
   return food[index];
-};
-
-const generateGraph = data => {
-  return [0];
 };
 
 const goTo = (start, end, graph) => {
@@ -97,13 +95,15 @@ app.post("/move", (request, response) => {
 
   const snake_head = request.you.body[0];
 
-  if (request.you.health < 50) {
-    return response.json(
-      goTo(snake_head, nearest_food, generateGraph(request))
-    );
-  } else {
-    return response.json(curl(request));
-  }
+  let board = Array(request.board.height)
+    .fill()
+    .map(() => Array(requast.board.width).fill(0));
+
+  request.board.snakes.forEach(snake =>
+    snake.forEach(element => (board[element[0]][element[1]] = 1))
+  );
+
+  console.log(board);
 
   return response.json(move);
 });
