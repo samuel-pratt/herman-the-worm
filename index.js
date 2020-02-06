@@ -131,9 +131,9 @@ app.post("/move", (request, response) => {
   console.log(food_path);
 
   if (food_path[0].y < food_path[1].y) {
-    move.move = "right";
-  } else if (food_path[0].y > food_path[1].y) {
     move.move = "left";
+  } else if (food_path[0].y > food_path[1].y) {
+    move.move = "right";
   } else if (food_path[0].x > food_path[1].x) {
     move.move = "up";
   } else if (food_path[0].x > food_path[1].x) {
