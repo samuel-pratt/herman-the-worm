@@ -135,9 +135,9 @@ app.post("/move", (request, response) => {
   } else if (food_path[0].x > food_path[1].x) {
     move.move = "left";
   } else if (food_path[0].y > food_path[1].y) {
-    move.move = "down";
-  } else if (food_path[0].y > food_path[1].y) {
     move.move = "up";
+  } else if (food_path[0].y > food_path[1].y) {
+    move.move = "down";
   }
 
   return response.json(move);
