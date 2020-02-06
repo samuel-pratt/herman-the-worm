@@ -109,7 +109,7 @@ app.post("/move", (request, response) => {
   const self = request.body.you.body.slice(1);
   self.forEach(element => (board[element.x][element.y] = 1));
 
-  let temp;
+  let food_path;
 
   easystar.setGrid(board);
   easystar.setAcceptableTiles([0]);
@@ -122,7 +122,7 @@ app.post("/move", (request, response) => {
       if (path === null) {
         //console.log("Path was not found.");
       } else {
-        temp = [path[0].x, path[0].y];
+        food_path = path;
         console.log(path[0].x + " " + path[0].y);
         //console.log(
         //  "Path was found. The first Point is " + path[0].x + " " + path[0].y
@@ -133,7 +133,7 @@ app.post("/move", (request, response) => {
 
   easystar.calculate();
 
-  console.log(temp);
+  console.log(food_path);
 
   return response.json(move);
 });
