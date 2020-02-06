@@ -124,36 +124,6 @@ app.post("/move", (request, response) => {
   console.log(checkDown);
   console.log(checkLeft);
   console.log(checkRight);
-  // None of this works, fix it
-  const snakeHeads = request.body.board.snakes.map(snake => {
-    return [snake.body[0].x, snake.body[0].y];
-  });
-  snakeHeads.splice(snakeHeads.indexOf(snakeHead), 1);
-  snakeHeads.forEach(head => {
-    checkUp.forEach(check => {
-      if (head === check) {
-        board[snakeHead.x][snakeHead.y - 1] = 1;
-      }
-    });
-
-    checkDown.forEach(check => {
-      if (head === check) {
-        board[snakeHead.x][snakeHead.y + 1] = 1;
-      }
-    });
-
-    checkLeft.forEach(check => {
-      if (head === check) {
-        board[snakeHead.x - 1][snakeHead.y] = 1;
-      }
-    });
-
-    checkRight.forEach(check => {
-      if (head === check) {
-        board[snakeHead.x + 1][snakeHead.y] = 1;
-      }
-    });
-  });
 
   // Find path
   easystar.enableSync();
