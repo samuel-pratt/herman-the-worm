@@ -95,13 +95,44 @@ app.post("/move", (request, response) => {
 
   const snake_head = request.body.you.body[0];
 
+  // Create empty board array
   let board = Array(request.body.board.height)
     .fill()
     .map(() => Array(request.body.board.width).fill(0));
 
+  // Add other snakes to the board
   request.body.board.snakes.forEach(snake =>
     snake.body.forEach(element => (board[element.x][element.y] = 1))
   );
+
+  // Add self to board, not including head
+  const self = request.body.you.body.slice(1);
+  self.forEach(element => (board[element.x][element.y] = 1));
+
+  let temp;
+
+  easystar.setGrid(board);
+  easystar.setAcceptableTiles([0]);
+  easystar.findPath(
+    snake_head.x,
+    snake_head.y,
+    nearest_food.x,
+    nearest_food.y,
+    function(path) {
+      if (path === null) {
+        //console.log("Path was not found.");
+      } else {
+        temp = [path[0].x, path[0].y];
+        //console.log(
+        //  "Path was found. The first Point is " + path[0].x + " " + path[0].y
+        //);
+      }
+    }
+  );
+
+  easystar.calculate();
+
+  console.log(temp);
 
   return response.json(move);
 });
