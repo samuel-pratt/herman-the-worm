@@ -127,7 +127,7 @@ app.post("/move", (request, response) => {
   );
 
   const setFoodPath = temp => {
-    food_path = temp;
+    console.log(temp);
   };
 
   easystar.calculate();
