@@ -36,8 +36,8 @@ const findNearestFood = data => {
 
   const distances = food.map(item => {
     return Math.sqrt(
-      (snake_head[0] - item[0]) * (snake_head[0] - item[0]) +
-        (snake_head[1] - item[1]) * (snake_head[1] - item[1])
+      (snake_head.x - item.x) * (snake_head.x - item.x) +
+        (snake_head.y - item.y) * (snake_head.y - item.y)
     );
   });
 
