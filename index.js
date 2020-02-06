@@ -128,7 +128,7 @@ app.post("/move", (request, response) => {
 
   easystar.calculate();
 
-  console.log(food_path);
+  console.log(board);
 
   if (food_path[0].x < food_path[1].x) {
     move.move = "right";
