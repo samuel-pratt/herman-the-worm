@@ -102,12 +102,12 @@ app.post("/move", (request, response) => {
 
   // Add other snakes to the board
   request.body.board.snakes.forEach(snake =>
-    snake.body.forEach(element => (board[element.x][element.y] = 1))
+    snake.body.forEach(element => (board[element.y][element.x] = 1))
   );
 
   // Add self to board, not including head
   const self = request.body.you.body.slice(1);
-  self.forEach(element => (board[element.x][element.y] = 1));
+  self.forEach(element => (board[element.y][element.x] = 1));
 
   easystar.setGrid(board);
   easystar.setAcceptableTiles([0]);
