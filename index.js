@@ -129,25 +129,25 @@ app.post("/move", (request, response) => {
     head = snake[0];
     checkUp.forEach(option => {
       if (head === option) {
-        console.log("there is a snake head up")
+        console.log("there is a snake head up");
       }
-    })
+    });
     checkDown.forEach(option => {
       if (head === option) {
-        console.log("there is a snake head down")
+        console.log("there is a snake head down");
       }
-    })
+    });
     checkLeft.forEach(option => {
       if (head === option) {
-        console.log("there is a snake head left")
+        console.log("there is a snake head left");
       }
-    })
+    });
     checkRight.forEach(option => {
       if (head === option) {
-        console.log("there is a snake head right)
+        console.log("there is a snake head right");
       }
-    })
-  })
+    });
+  });
 
   // Find path
   easystar.enableSync();
