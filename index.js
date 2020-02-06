@@ -121,8 +121,8 @@ app.post("/move", (request, response) => {
     [snakeHead.x + 1, snakeHead.y + 1]
   ];
 
-  request.body.board.snakes.body.forEach(snake => {
-    head = snake[0];
+  request.body.board.snakes.forEach(snake => {
+    head = snake.body[0];
     checkUp.forEach(option => {
       console.log("Check up: head:" + head + ", option:" + option);
       if (head === option) {
