@@ -123,7 +123,7 @@ app.post("/move", (request, response) => {
         //console.log("Path was not found.");
       } else {
         food_path = path;
-        console.log(path[0].x + " " + path[0].y);
+        console.log(food_path[0]);
         //console.log(
         //  "Path was found. The first Point is " + path[0].x + " " + path[0].y
         //);
@@ -132,8 +132,6 @@ app.post("/move", (request, response) => {
   );
 
   easystar.calculate();
-
-  console.log(food_path);
 
   return response.json(move);
 });
