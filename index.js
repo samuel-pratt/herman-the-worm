@@ -106,7 +106,7 @@ app.post("/move", (request, response) => {
   );
 
   // Add self to board, not including head
-  const self = request.body.you.body.slice(1);
+  const self = request.body.you.body;
   self.forEach(element => (board[element.y][element.x] = 1));
 
   easystar.setGrid(board);
