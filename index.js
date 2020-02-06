@@ -111,8 +111,6 @@ app.post("/move", (request, response) => {
 
   let temp;
 
-  console.log(nearest_food);
-
   easystar.setGrid(board);
   easystar.setAcceptableTiles([0]);
   easystar.findPath(
@@ -125,6 +123,7 @@ app.post("/move", (request, response) => {
         //console.log("Path was not found.");
       } else {
         temp = [path[0].x, path[0].y];
+        console.log(path[0].x + " " + path[0].y);
         //console.log(
         //  "Path was found. The first Point is " + path[0].x + " " + path[0].y
         //);
