@@ -26,22 +26,54 @@ app.use(bodyParser.json());
  *    returns the next move along an A* path towards coords
  */
 
+const findNearestFood = data => {
+  const snake_head = data.you.body[0];
+  const food = data.board.food;
+
+  if (food === []) return null; // No food on board
+
+  const distances = food.map(item => {
+    return Math.sqrt(
+      (snake_head[0] - item[0]) * (snake_head[0] - item[0]) +
+        (snake_head[1] - item[1]) * (snake_head[1] - item[1])
+    );
+  });
+
+  const shortestDistance = Math.min(...distances);
+  const index = distance.indexOf(shortestDistance);
+
+  return food[index];
+};
+
+const generateGraph = data => {
+  return [0];
+};
+
+const goTo = (start, end, graph) => {
+  return [0, 0];
+};
+
 const curl = data => {
   const length = data.you.body.length;
-};
 
-const findNearestFood = data => {
-  const food = data.board.food;
-};
-
-const goTo = data => {
-  const self = data.you;
+  if (length < 4) {
+    // 2x2 square, perimeter 4
+  } else if (length < 6) {
+    // 2x3 square, perimeter 6
+  } else if (length < 8) {
+    // 3x3 square, perimeter 8
+  } else if (length < 10) {
+    // 3x4 square, perimeter 10
+  } else if (length < 12) {
+    // 4x4 square, perimeter 12
+  }
+  return { move: "up" };
 };
 
 // API info at: https://docs.battlesnake.com/snake-api
 
 app.post("/start", (request, response) => {
-  // Respond with snake data: { color: 'Red', headType: "regular", tailType: "regular"}
+  // Respond with snake customization data
   const data = {
     color: "#0F0F0F",
     headType: "safe",
@@ -52,10 +84,26 @@ app.post("/start", (request, response) => {
 });
 
 app.post("/move", (request, response) => {
-  // Respond with move data: { move: "left" }
-  const move = {
+  // Respond with move data
+  let move = {
     move: "left"
   };
+
+  const nearest_food = findNearestFood(request);
+
+  if (nearest_food === null) {
+    return response.json(curl(request));
+  }
+
+  const snake_head = request.you.body[0];
+
+  if (request.you.health < 50) {
+    return response.json(
+      goTo(snake_head, nearest_food, generateGraph(request))
+    );
+  } else {
+    return response.json(curl(request));
+  }
 
   return response.json(move);
 });
@@ -66,7 +114,7 @@ app.post("/end", (request, response) => {
 });
 
 app.post("/ping", (request, response) => {
-  // Wakes up app if asleep, repsonse ignored
+  // Wakes up app if asleep, response ignored
   return response;
 });
 
