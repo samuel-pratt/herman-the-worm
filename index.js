@@ -93,13 +93,13 @@ app.post("/move", (request, response) => {
     return response.json(move);
   }
 
-  const snake_head = request.you.body[0];
+  const snake_head = request.body.you.body[0];
 
-  let board = Array(request.board.height)
+  let board = Array(request.body.board.height)
     .fill()
-    .map(() => Array(request.board.width).fill(0));
+    .map(() => Array(request.body.board.width).fill(0));
 
-  request.board.snakes.forEach(snake =>
+  request.body.board.snakes.forEach(snake =>
     snake.forEach(element => (board[element.x][element.y] = 1))
   );
 
