@@ -12,7 +12,7 @@ app.enable("verbose errors");
 
 app.use(morgan("dev"));
 app.use(bodyParser.json());
-
+let food_path = [];
 /*
  * TODO:
  * Create log file that stores:
@@ -111,7 +111,7 @@ app.post("/move", (request, response) => {
 
   easystar.setGrid(board);
   easystar.setAcceptableTiles([0]);
-  let food_path = [];
+
   easystar.findPath(
     snake_head.x,
     snake_head.y,
@@ -121,14 +121,10 @@ app.post("/move", (request, response) => {
       if (path === null) {
         console.log("Path was not found.");
       } else {
-        setFoodPath(path);
+        food_path = path;
       }
     }
   );
-
-  const setFoodPath = temp => {
-    console.log(temp);
-  };
 
   easystar.calculate();
 
