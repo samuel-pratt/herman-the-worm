@@ -1,33 +1,37 @@
+// Imports
 const bodyParser = require("body-parser");
 const express = require("express");
 const morgan = require("morgan");
 const easystarjs = require("easystarjs");
+
+// Pathfinding stuff
 const easystar = new easystarjs.js();
-
-const app = express();
-
-app.set("port", process.env.PORT || 9001);
-
-app.enable("verbose errors");
-
-app.use(morgan("dev"));
-app.use(bodyParser.json());
 let food_path = [];
 
+// Express app stuff
+const app = express();
+app.set("port", process.env.PORT || 9001);
+app.enable("verbose errors");
+app.use(morgan("dev"));
+app.use(bodyParser.json());
+
+// Helper functions
 const findNearestFood = (food, snakeHead) => {
   if (food === []) return null; // No food on board
 
   const distances = food.map(item => {
-    return Math.sqrt(
-      (snakeHead.x - item.x) * (snakeHead.x - item.x) +
-        (snakeHead.y - item.y) * (snakeHead.y - item.y)
-    );
+    return {
+      distance: Math.sqrt(
+        (snakeHead.x - item.x) * (snakeHead.x - item.x) +
+          (snakeHead.y - item.y) * (snakeHead.y - item.y)
+      ),
+      location: item
+    };
   });
 
-  const shortestDistance = Math.min(...distances);
-  const index = distances.indexOf(shortestDistance);
+  distances.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
 
-  return food[index];
+  return distances;
 };
 
 // API info at: https://docs.battlesnake.com/snake-api
