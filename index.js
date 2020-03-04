@@ -103,9 +103,8 @@ app.post("/move", (request, response) => {
         }
       }
     );
+    easystar.calculate();
   }
-
-  easystar.calculate();
 
   if (food_path === []) {
     // Curl
