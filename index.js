@@ -4,10 +4,6 @@ const express = require("express");
 const morgan = require("morgan");
 const easystarjs = require("easystarjs");
 
-// Pathfinding stuff
-const easystar = new easystarjs.js();
-let food_path = [];
-
 // Express app stuff
 const app = express();
 app.set("port", process.env.PORT || 9001);
@@ -15,7 +11,10 @@ app.enable("verbose errors");
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 
-// Helper functions
+// Pathfinding stuff
+const easystar = new easystarjs.js();
+let food_path = [];
+
 const findNearestFood = (food, snakeHead) => {
   if (food === []) return null; // No food on board
 
@@ -51,6 +50,70 @@ app.post("/move", (request, response) => {
   let move = {
     move: "left"
   };
+
+  const food = findNearestFood(
+    request.body.board.food,
+    request.body.you.body[0]
+  );
+
+  if (food === null) {
+    // Curl
+  }
+
+  const snakeHead = request.body.you.body[0];
+
+  // Create empty board array
+  let board = Array(request.body.board.height)
+    .fill()
+    .map(() => Array(request.body.board.width).fill(0));
+
+  // Add other snakes to the board
+  request.body.board.snakes.forEach(snake =>
+    snake.body.forEach(element => (board[element.y][element.x] = 1))
+  );
+
+  // Add self to board, not including head
+  const self = request.body.you.body.slice(1);
+  self.forEach(element => (board[element.y][element.x] = 1));
+
+  // Find path
+  easystar.enableSync();
+  easystar.setGrid(board);
+  easystar.setAcceptableTiles([0]);
+
+  for (let i = 0; i < food.length; i++) {
+    nearest_food = food[i].location;
+    easystar.findPath(
+      snakeHead.x,
+      snakeHead.y,
+      nearest_food.x,
+      nearest_food.y,
+      function(path) {
+        if (path === null) {
+          console.log("Path was not found.");
+        } else {
+          food_path = path;
+        }
+      }
+    );
+  }
+
+  if (food_path === []) {
+    // Curl
+  }
+
+  easystar.calculate();
+
+  if (food_path[1].x > snakeHead.x) {
+    move.move = "right";
+  } else if (food_path[1].x < snakeHead.x) {
+    move.move = "left";
+  } else if (food_path[1].y > snakeHead.y) {
+    move.move = "down";
+  } else if (food_path[1].y < snakeHead.y) {
+    move.move = "up";
+  }
+  console.log("MOVE: " + move.move);
   return response.json(move);
 });
 
