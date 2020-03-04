@@ -116,9 +116,9 @@ app.post("/move", (request, response) => {
   } else if (food_path[1].x < snakeHead.x) {
     move.move = "left";
   } else if (food_path[1].y > snakeHead.y) {
-    move.move = "down";
-  } else if (food_path[1].y < snakeHead.y) {
     move.move = "up";
+  } else if (food_path[1].y < snakeHead.y) {
+    move.move = "down";
   }
   console.log("MOVE: " + move.move);
   return response.json(move);
