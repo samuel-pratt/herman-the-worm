@@ -57,6 +57,8 @@ app.post("/move", (request, response) => {
     request.body.you.body[0]
   );
 
+  console.log(food);
+
   if (food === null) {
     // Curl
   }
