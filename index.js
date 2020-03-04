@@ -82,9 +82,6 @@ app.post("/move", (request, response) => {
   easystar.setAcceptableTiles([0]);
 
   for (let i = 0; i < food.length; i++) {
-    if (food_path !== []) {
-      break;
-    }
     nearest_food = food[i].location;
     easystar.findPath(
       snakeHead.x,
@@ -96,6 +93,7 @@ app.post("/move", (request, response) => {
           console.log("Path was not found.");
         } else {
           food_path = path;
+          break;
         }
       }
     );
