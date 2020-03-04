@@ -84,27 +84,22 @@ app.post("/move", (request, response) => {
   easystar.setGrid(board);
   easystar.setAcceptableTiles([0]);
 
-  for (let i = 0; i < food.length; i++) {
-    if (isFoodFound) {
-      break;
-    }
-    nearest_food = food[i].location;
-    easystar.findPath(
-      snakeHead.x,
-      snakeHead.y,
-      nearest_food.x,
-      nearest_food.y,
-      function(path) {
-        if (path === null) {
-          console.log("Path was not found.");
-        } else {
-          food_path = path;
-          isFoodFound = true;
-        }
+  nearest_food = food[0].location;
+  easystar.findPath(
+    snakeHead.x,
+    snakeHead.y,
+    nearest_food.x,
+    nearest_food.y,
+    function(path) {
+      if (path === null) {
+        console.log("Path was not found.");
+      } else {
+        food_path = path;
+        isFoodFound = true;
       }
-    );
-    easystar.calculate();
-  }
+    }
+  );
+  easystar.calculate();
 
   if (food_path === []) {
     // Curl
