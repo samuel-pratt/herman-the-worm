@@ -99,7 +99,7 @@ app.post("/move", (request, response) => {
   }
 
   if (food_path === []) {
-    // Curl
+    // Curl s
   }
 
   easystar.calculate();
