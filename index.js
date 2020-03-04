@@ -13,7 +13,8 @@ app.use(bodyParser.json());
 
 // Pathfinding stuff
 const easystar = new easystarjs.js();
-let food_path;
+let food_path = [];
+let isFoodFound = false;
 
 const findFoodDistances = (food, snakeHead) => {
   if (food === []) return null; // No food on board
@@ -82,7 +83,7 @@ app.post("/move", (request, response) => {
   easystar.setAcceptableTiles([0]);
 
   for (let i = 0; i < food.length; i++) {
-    if (food_path) {
+    if (isFoodFound) {
       break;
     }
     nearest_food = food[i].location;
@@ -96,6 +97,7 @@ app.post("/move", (request, response) => {
           console.log("Path was not found.");
         } else {
           food_path = path;
+          isFoodFound = true;
         }
       }
     );
