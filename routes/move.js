@@ -24,13 +24,13 @@ function moveAsCoord(move, head) {
 function coordAsMove(coord, head) {
   console.log(coord);
   console.log(head);
-  if (coord.x === head.x && coord.y === head.y - 1) {
+  if (coord.x == head.x && coord.y == head.y - 1) {
     return 'up';
-  } else if (coord.x === head.x && coord.y === head.y + 1) {
+  } else if (coord.x == head.x && coord.y == head.y + 1) {
     return 'down';
-  } else if (coord.x === head.x - 1 && coord.y === head.y) {
+  } else if (coord.x == head.x - 1 && coord.y == head.y) {
     return 'left';
-  } else if (coord.x === head.x + 1 && coord.y === head.y) {
+  } else if (coord.x == head.x + 1 && coord.y == head.y) {
     return 'right';
   }
 }
@@ -120,7 +120,7 @@ module.exports = function handleMove(request, response) {
 
   findPathToFood(nearestFood, snakes, self, boardWidth, boardHeight);
 
-  move = coordAsMove(food_path[0], self.body[0]);
+  move = coordAsMove(food_path[1], self.body[0]);
 
   console.log(move);
 
