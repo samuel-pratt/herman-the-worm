@@ -3,6 +3,8 @@ const easystarjs = require('easystarjs');
 const easystar = new easystarjs.js();
 let food_path = [];
 let isFoodFound = false;
+let tail_path = [];
+let isTailFound = false;
 
 function coordEqual(a, b) {
   return a.x === b.x && a.y === b.y;
@@ -41,6 +43,24 @@ function offBoard(state, coord) {
   if (coord.y >= state.board.height) return true;
   if (coord.x >= state.board.height) return true;
   return false; // If it makes it here we are ok.
+}
+
+function onSnakes(state, coord) {
+  state.board.snakes.forEach((snake) => {
+    snake.body.forEach((snakePart) => {
+      if (coordEqual(snakePart, coord)) {
+        return true;
+      }
+    });
+  });
+
+  state.you.body.forEach((snakePart) => {
+    if (coordEqual(snakePart, coord)) {
+      return true;
+    }
+  });
+
+  return false;
 }
 
 function findFoodDistances(food, snakeHead) {
@@ -116,13 +136,29 @@ module.exports = function handleMove(request, response) {
   const snakes = gameData.board.snakes;
   const self = gameData.you;
 
+  const head = self.body[0];
+  const neck = self.body[1];
+
   const nearestFood = findFoodDistances(food, self.body[0]);
 
   findPathToFood(nearestFood, snakes, self, boardWidth, boardHeight);
 
-  move = coordAsMove(food_path[1], self.body[0]);
-
-  console.log(move);
+  if (isFoodFound === true) {
+    move = coordAsMove(food_path[1], self.body[0]);
+  } else {
+    for (const move of moves) {
+      const coord = moveAsCoord(move, head);
+      if (
+        !offBoard(gameData, coord) &&
+        !coordEqual(coord, neck) &&
+        !onSnakes(gameData, coord)
+      ) {
+        response.status(200).send({
+          move: move,
+        });
+      }
+    }
+  }
 
   console.log('MOVE_CHOICE: ' + move);
   response.status(200).send({
