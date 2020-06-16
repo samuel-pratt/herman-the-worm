@@ -117,8 +117,10 @@ module.exports = function handleMove(request, response) {
   const nearestFood = findFoodDistances(food, self.body[0]);
 
   findPathToFood(nearestFood, snakes, self, boardWidth, boardHeight);
-  console.log(food_path);
+
   move = coordAsMove(food_path[0], self.body[0]);
+
+  console.log(move);
 
   console.log('MOVE_CHOICE: ' + move);
   response.status(200).send({
