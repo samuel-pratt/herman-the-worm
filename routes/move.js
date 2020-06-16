@@ -104,7 +104,7 @@ function findPathToFood(food, snakes, self, width, height) {
   }
 }
 
-export default function handleMove(request, response) {
+module.exports = function handleMove(request, response) {
   const gameData = request.body;
 
   console.log('MOVE_DATA:');
@@ -127,4 +127,4 @@ export default function handleMove(request, response) {
   response.status(200).send({
     move: move,
   });
-}
+};
