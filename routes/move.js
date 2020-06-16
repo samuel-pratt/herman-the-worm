@@ -75,7 +75,7 @@ function findPathToFood(food, snakes, self, width, height) {
 
   // Add self to board, not including head
   const selfBody = self.body.slice(1);
-  self.forEach((element) => (board[element.y][element.x] = 1));
+  selfBody.forEach((element) => (board[element.y][element.x] = 1));
 
   // Find path
   easystar.enableSync();
@@ -119,7 +119,7 @@ module.exports = function handleMove(request, response) {
   const snakes = gameData.board.snakes;
   const self = gameData.you;
 
-  findPathToFood(food, snakes, self.body, boardWidth, boardHeight);
+  findPathToFood(food, snakes, self, boardWidth, boardHeight);
 
   move = coordAsMove(food_path[0], self.body[0]);
 
