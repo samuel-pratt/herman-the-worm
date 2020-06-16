@@ -119,7 +119,7 @@ module.exports = function handleMove(request, response) {
   const snakes = gameData.board.snakes;
   const self = gameData.you;
 
-  findPathToFood(food, snakes, self, boardWidth, boardHeight);
+  findPathToFood(food, snakes, self.body, boardWidth, boardHeight);
 
   move = coordAsMove(food_path[0], self.body[0]);
 
