@@ -15,7 +15,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 
 // ROUTES
-app.get('/', handleIndex);
+app.get('/', handlePersonalization);
 app.post('/start', handleStart);
 app.post('/move', handleMove);
 app.post('/end', handleEnd);
