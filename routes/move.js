@@ -111,7 +111,7 @@ module.exports = function handleMove(request, response) {
   console.log(gameData);
 
   const possibleMoves = ['up', 'down', 'left', 'right'];
-  const move = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+  let move = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
 
   const boardWidth = gameData.board.width;
   const boardHeight = gameData.board.height;
