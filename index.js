@@ -2,7 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const morgan = require('morgan');
 
-const handleIndex = require('./routes/index');
+const handleIndex = require('./routes');
 const handleStart = require('./routes/start');
 const handleMove = require('./routes/move');
 const handleEnd = require('./routes/end');
