@@ -22,6 +22,8 @@ function moveAsCoord(move, head) {
 }
 
 function coordAsMove(coord, head) {
+  console.log(coord);
+  console.log(head);
   if (coord.x === head.x && coord.y === head.y - 1) {
     return 'up';
   } else if (coord.x === head.x && coord.y === head.y + 1) {
