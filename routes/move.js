@@ -90,7 +90,7 @@ function findPathToFood(food, snakes, self, width, height) {
     nearest_food.y,
     function (path) {
       if (path === null) {
-        isFoodFound = false;
+        console.log('No path found');
       } else {
         food_path = path;
         isFoodFound = true;
@@ -118,7 +118,7 @@ module.exports = function handleMove(request, response) {
   const nearestFood = findFoodDistances(food, self.body[0]);
 
   findPathToFood(nearestFood, snakes, self, boardWidth, boardHeight);
-
+  console.log(food_path);
   move = coordAsMove(food_path[0], self.body[0]);
 
   console.log('MOVE_CHOICE: ' + move);
