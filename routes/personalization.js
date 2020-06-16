@@ -1,4 +1,4 @@
-module.exports = function handleIndex(request, response) {
+module.exports = function handlePersonalization(request, response) {
   const battlesnakeInfo = {
     apiversion: '1',
     author: 'Sam Pratt',
