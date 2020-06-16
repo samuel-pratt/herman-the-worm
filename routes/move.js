@@ -11,9 +11,9 @@ function coordEqual(a, b) {
 function moveAsCoord(move, head) {
   switch (move) {
     case 'up':
-      return { x: head.x, y: head.y - 1 };
-    case 'down':
       return { x: head.x, y: head.y + 1 };
+    case 'down':
+      return { x: head.x, y: head.y - 1 };
     case 'left':
       return { x: head.x - 1, y: head.y };
     case 'right':
@@ -24,9 +24,9 @@ function moveAsCoord(move, head) {
 function coordAsMove(coord, head) {
   console.log(coord);
   console.log(head);
-  if (coord.x == head.x && coord.y == head.y - 1) {
+  if (coord.x == head.x && coord.y == head.y + 1) {
     return 'up';
-  } else if (coord.x == head.x && coord.y == head.y + 1) {
+  } else if (coord.x == head.x && coord.y == head.y - 1) {
     return 'down';
   } else if (coord.x == head.x - 1 && coord.y == head.y) {
     return 'left';
