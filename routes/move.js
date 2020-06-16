@@ -22,15 +22,14 @@ function moveAsCoord(move, head) {
 }
 
 function coordAsMove(coord, head) {
-  switch (coord) {
-    case { x: head.x, y: head.y - 1 }:
-      return 'up';
-    case { x: head.x, y: head.y + 1 }:
-      return 'down';
-    case { x: head.x - 1, y: head.y }:
-      return 'left';
-    case { x: head.x + 1, y: head.y }:
-      return 'right';
+  if (coord === { x: head.x, y: head.y - 1 }) {
+    return 'up';
+  } else if (coord === { x: head.x, y: head.y + 1 }) {
+    return 'down';
+  } else if (coord === { x: head.x - 1, y: head.y }) {
+    return 'left';
+  } else if (coord === { x: head.x + 1, y: head.y }) {
+    return 'right';
   }
 }
 
