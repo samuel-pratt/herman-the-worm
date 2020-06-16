@@ -82,26 +82,22 @@ function findPathToFood(food, snakes, self, width, height) {
   easystar.setGrid(board);
   easystar.setAcceptableTiles([0]);
 
-  let i = 0;
-  while (!isFoodFound) {
-    nearest_food = food[i].location;
-    easystar.findPath(
-      snakeHead.x,
-      snakeHead.y,
-      nearest_food.x,
-      nearest_food.y,
-      function (path) {
-        if (path === null) {
-          isFoodFound = false;
-        } else {
-          food_path = path;
-          isFoodFound = true;
-        }
-      },
-    );
-    easystar.calculate();
-    i++;
-  }
+  nearest_food = food[0].location;
+  easystar.findPath(
+    snakeHead.x,
+    snakeHead.y,
+    nearest_food.x,
+    nearest_food.y,
+    function (path) {
+      if (path === null) {
+        isFoodFound = false;
+      } else {
+        food_path = path;
+        isFoodFound = true;
+      }
+    },
+  );
+  easystar.calculate();
 }
 
 module.exports = function handleMove(request, response) {
