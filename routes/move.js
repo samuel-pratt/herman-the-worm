@@ -3,6 +3,7 @@ const easystarjs = require('easystarjs');
 const easystar = new easystarjs.js();
 let food_path = [];
 let isFoodFound = false;
+let noPathFound = false;
 
 function coordEqual(a, b) {
   return a.x === b.x && a.y === b.y;
@@ -109,7 +110,7 @@ function findPathToFood(food, snakes, self, width, height) {
     nearest_food.y,
     function (path) {
       if (path === null) {
-        console.log('No path found');
+        noPathFound = true;
       } else {
         food_path = path;
         isFoodFound = true;
@@ -141,13 +142,13 @@ module.exports = function handleMove(request, response) {
 
   findPathToFood(nearestFood, snakes, self, boardWidth, boardHeight);
 
-  if (isFoodFound === true) {
+  if (noPathFound === true) {
     response.status(200).send({
-      move: coordAsMove(food_path[1], self.body[0]),
+      move: 'up',
     });
   } else {
     response.status(200).send({
-      move: 'up',
+      move: coordAsMove(food_path[1], self.body[0]),
     });
   }
 
