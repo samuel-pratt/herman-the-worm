@@ -121,6 +121,9 @@ function findPathToFood(food, snakes, self, width, height) {
 }
 
 module.exports = function handleMove(request, response) {
+  isFoodFound = false;
+  noPathFound = false;
+
   const gameData = request.body;
 
   console.log('MOVE_DATA:');
