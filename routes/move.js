@@ -3,8 +3,6 @@ const easystarjs = require('easystarjs');
 const easystar = new easystarjs.js();
 let food_path = [];
 let isFoodFound = false;
-let tail_path = [];
-let isTailFound = false;
 
 function coordEqual(a, b) {
   return a.x === b.x && a.y === b.y;
@@ -121,45 +119,6 @@ function findPathToFood(food, snakes, self, width, height) {
   easystar.calculate();
 }
 
-function findPathToTail(snakes, self, width, height) {
-  const snakeHead = self.body[0];
-
-  // Create empty board array
-  let board = Array(height)
-    .fill()
-    .map(() => Array(width).fill(0));
-
-  // Add other snakes to the board
-  snakes.forEach((snake) =>
-    snake.body.forEach((element) => (board[element.y][element.x] = 1))
-  );
-
-  // Add self to board, not including head
-  const selfBody = self.body.slice(1);
-  selfBody.forEach((element) => (board[element.y][element.x] = 1));
-
-  board[self.body[self.body.length - 1][0]][
-    self.body[self.body.length - 1][1]
-  ] = 0;
-
-  // Find path
-  easystar.enableSync();
-  easystar.setGrid(board);
-  easystar.setAcceptableTiles([0]);
-
-  const tail = self.body[self.body.length - 1];
-
-  easystar.findPath(snakeHead.x, snakeHead.y, tail.x, tail.y, function (path) {
-    if (path === null) {
-      console.log('No path found');
-    } else {
-      food_path = path;
-      isFoodFound = true;
-    }
-  });
-  easystar.calculate();
-}
-
 module.exports = function handleMove(request, response) {
   const gameData = request.body;
 
@@ -188,10 +147,7 @@ module.exports = function handleMove(request, response) {
     });
   } else {
     response.status(200).send({
-      move: coordAsMove(
-        findPathToTail(snakes, self, boardWidth, boardHeight),
-        self.body[0]
-      ),
+      move: 'up',
     });
   }
 
