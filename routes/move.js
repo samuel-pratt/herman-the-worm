@@ -138,6 +138,10 @@ function findPathToTail(snakes, self, width, height) {
   const selfBody = self.body.slice(1);
   selfBody.forEach((element) => (board[element.y][element.x] = 1));
 
+  board[self.body[self.body.length - 1][0]][
+    self.body[self.body.length - 1][1]
+  ] = 0;
+
   // Find path
   easystar.enableSync();
   easystar.setGrid(board);
