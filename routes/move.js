@@ -146,9 +146,18 @@ module.exports = function handleMove(request, response) {
   findPathToFood(nearestFood, snakes, self, boardWidth, boardHeight);
 
   if (noPathFound === true) {
-    response.status(200).send({
-      move: 'up',
-    });
+    for (const move of moves) {
+      const coord = moveAsCoord(move, head);
+      if (
+        !offBoard(gameData, coord) &&
+        !coordEqual(coord, neck) &&
+        !onSnakes(gameData, coord)
+      ) {
+        response.status(200).send({
+          move: move,
+        });
+      }
+    }
   } else {
     response.status(200).send({
       move: coordAsMove(food_path[1], self.body[0]),
