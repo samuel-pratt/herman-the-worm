@@ -70,7 +70,7 @@ function findFoodDistances(food, snakeHead) {
     return {
       distance: Math.sqrt(
         (snakeHead.x - item.x) * (snakeHead.x - item.x) +
-          (snakeHead.y - item.y) * (snakeHead.y - item.y),
+          (snakeHead.y - item.y) * (snakeHead.y - item.y)
       ),
       location: item,
     };
@@ -91,7 +91,7 @@ function findPathToFood(food, snakes, self, width, height) {
 
   // Add other snakes to the board
   snakes.forEach((snake) =>
-    snake.body.forEach((element) => (board[element.y][element.x] = 1)),
+    snake.body.forEach((element) => (board[element.y][element.x] = 1))
   );
 
   // Add self to board, not including head
@@ -116,7 +116,7 @@ function findPathToFood(food, snakes, self, width, height) {
         food_path = path;
         isFoodFound = true;
       }
-    },
+    }
   );
   easystar.calculate();
 }
@@ -144,7 +144,9 @@ module.exports = function handleMove(request, response) {
   findPathToFood(nearestFood, snakes, self, boardWidth, boardHeight);
 
   if (isFoodFound === true) {
-    move = coordAsMove(food_path[1], self.body[0]);
+    response.status(200).send({
+      move: coordAsMove(food_path[1], self.body[0]),
+    });
   } else {
     for (const move of moves) {
       const coord = moveAsCoord(move, head);
