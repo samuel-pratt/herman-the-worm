@@ -1,4 +1,4 @@
-module.exports = function handleEnd(request, response) {
+function handleEnd(request, response) {
   const gameData = request.body;
 
   console.log('END');
@@ -6,3 +6,5 @@ module.exports = function handleEnd(request, response) {
 
   response.status(200).send('ok');
 };
+
+export default handleEnd;
