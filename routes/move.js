@@ -1,6 +1,6 @@
-import { js } from 'easystarjs';
+const easystarjs = require('easystarjs');
 
-const easystar = new js();
+const easystar = new easystarjs.js();
 let food_path = [];
 let isFoodFound = false;
 let noPathFound = false;
@@ -120,7 +120,7 @@ function findPathToFood(food, snakes, self, width, height) {
   easystar.calculate();
 }
 
-function handleMove(request, response) {
+module.exports = function handleMove(request, response) {
   isFoodFound = false;
   noPathFound = false;
 
@@ -169,5 +169,3 @@ function handleMove(request, response) {
     move: move,
   });
 };
-
-export default handleMove;

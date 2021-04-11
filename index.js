@@ -1,15 +1,15 @@
-import { json } from 'body-parser';
-import express from 'express';
-import morgan from 'morgan';
+const bodyParser = require('body-parser');
+const express = require('express');
+const morgan = require('morgan');
 
-import handleIndex from './routes/index';
-import handleStart from './routes/start';
-import handleMove from './routes/move';
-import handleEnd from './routes/end';
+const handleIndex = require('./routes/index');
+const handleStart = require('./routes/start');
+const handleMove = require('./routes/move');
+const handleEnd = require('./routes/end');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-app.use(json());
+app.use(bodyParser.json());
 app.enable('verbose errors');
 app.use(morgan('dev'));
 

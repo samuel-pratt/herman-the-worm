@@ -1,4 +1,4 @@
-function handleIndex(request, response) {
+module.exports = function handleIndex(request, response) {
   var battlesnakeInfo = {
     apiversion: '1',
     author: 'Sam Pratt',
@@ -8,5 +8,3 @@ function handleIndex(request, response) {
   };
   response.status(200).json(battlesnakeInfo);
 };
-
-export default handleIndex;

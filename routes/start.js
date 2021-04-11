@@ -1,4 +1,4 @@
-function handleStart(request, response) {
+module.exports = function handleStart(request, response) {
   const gameData = request.body;
 
   console.log('START');
@@ -6,5 +6,3 @@ function handleStart(request, response) {
 
   response.status(200).send('ok');
 };
-
-export default handleStart;
