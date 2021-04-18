@@ -14,7 +14,7 @@ let food_path = [];
 let isFoodFound = false;
 let noPathFound = false;
 
-function findPath(food, snakes, self, width, height) {
+function findPath(destination, snakes, self, width, height) {
   const snakeHead = self.body[0];
 
   // Create empty board array
@@ -36,14 +36,20 @@ function findPath(food, snakes, self, width, height) {
   easystar.setGrid(board);
   easystar.setAcceptableTiles([0]);
 
-  easystar.findPath(snakeHead.x, snakeHead.y, food.x, food.y, function (path) {
-    if (path === null) {
-      noPathFound = true;
-    } else {
-      food_path = path;
-      isFoodFound = true;
-    }
-  });
+  easystar.findPath(
+    snakeHead.x,
+    snakeHead.y,
+    destination.x,
+    destination.y,
+    function (path) {
+      if (path === null) {
+        noPathFound = true;
+      } else {
+        food_path = path;
+        isFoodFound = true;
+      }
+    },
+  );
   easystar.calculate();
 }
 
