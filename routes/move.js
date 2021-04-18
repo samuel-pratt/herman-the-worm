@@ -125,7 +125,7 @@ module.exports = function handleMove(request, response) {
   // Add self to board, not including head
   const selfBody = self.body.slice(1);
   selfBody.forEach((element) => (board[element.y][element.x] = 0));
-
+  console.log(board);
   var graph = new astar.Graph(board);
 
   var start = graph.grid[snakeHead.x][snakeHead.y];
