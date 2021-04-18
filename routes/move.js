@@ -1,86 +1,20 @@
-const easystarjs = require('easystarjs');
+const coordFunctions = require('../functions/coords');
+const coordEqual = coordFunctions.coordEqual;
+const coordAsMove = coordFunctions.coordAsMove;
+const moveAsCoord = coordFunctions.moveAsCoord;
 
+const boardFunctions = require('../functions/board');
+const findFoodDistances = boardFunctions.findFoodDistances;
+const offBoard = boardFunctions.offBoard;
+const onSnakes = boardFunctions.onSnakes;
+
+const easystarjs = require('easystarjs');
 const easystar = new easystarjs.js();
 let food_path = [];
 let isFoodFound = false;
 let noPathFound = false;
 
-function coordEqual(a, b) {
-  return a.x === b.x && a.y === b.y;
-}
-
-function moveAsCoord(move, head) {
-  switch (move) {
-    case 'up':
-      return { x: head.x, y: head.y + 1 };
-    case 'down':
-      return { x: head.x, y: head.y - 1 };
-    case 'left':
-      return { x: head.x - 1, y: head.y };
-    case 'right':
-      return { x: head.x + 1, y: head.y };
-  }
-}
-
-function coordAsMove(coord, head) {
-  console.log(coord);
-  console.log(head);
-  if (coord.x == head.x && coord.y == head.y + 1) {
-    return 'up';
-  } else if (coord.x == head.x && coord.y == head.y - 1) {
-    return 'down';
-  } else if (coord.x == head.x - 1 && coord.y == head.y) {
-    return 'left';
-  } else if (coord.x == head.x + 1 && coord.y == head.y) {
-    return 'right';
-  }
-}
-
-function offBoard(state, coord) {
-  if (coord.x < 0) return true;
-  if (coord.y < 0) return true;
-  if (coord.y >= state.board.height) return true;
-  if (coord.x >= state.board.height) return true;
-  return false; // If it makes it here we are ok.
-}
-
-function onSnakes(state, coord) {
-  state.board.snakes.forEach((snake) => {
-    snake.body.forEach((snakePart) => {
-      if (coordEqual(snakePart, coord)) {
-        return true;
-      }
-    });
-  });
-
-  state.you.body.forEach((snakePart) => {
-    if (coordEqual(snakePart, coord)) {
-      return true;
-    }
-  });
-
-  return false;
-}
-
-function findFoodDistances(food, snakeHead) {
-  if (food === []) return null; // No food on board
-
-  const distances = food.map((item) => {
-    return {
-      distance: Math.sqrt(
-        (snakeHead.x - item.x) * (snakeHead.x - item.x) +
-          (snakeHead.y - item.y) * (snakeHead.y - item.y)
-      ),
-      location: item,
-    };
-  });
-
-  distances.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
-
-  return distances;
-}
-
-function findPathToFood(food, snakes, self, width, height) {
+function findPath(food, snakes, self, width, height) {
   const snakeHead = self.body[0];
 
   // Create empty board array
@@ -90,7 +24,7 @@ function findPathToFood(food, snakes, self, width, height) {
 
   // Add other snakes to the board
   snakes.forEach((snake) =>
-    snake.body.forEach((element) => (board[element.y][element.x] = 1))
+    snake.body.forEach((element) => (board[element.y][element.x] = 1)),
   );
 
   // Add self to board, not including head
@@ -102,21 +36,14 @@ function findPathToFood(food, snakes, self, width, height) {
   easystar.setGrid(board);
   easystar.setAcceptableTiles([0]);
 
-  nearest_food = food[0].location;
-  easystar.findPath(
-    snakeHead.x,
-    snakeHead.y,
-    nearest_food.x,
-    nearest_food.y,
-    function (path) {
-      if (path === null) {
-        noPathFound = true;
-      } else {
-        food_path = path;
-        isFoodFound = true;
-      }
+  easystar.findPath(snakeHead.x, snakeHead.y, food.x, food.y, function (path) {
+    if (path === null) {
+      noPathFound = true;
+    } else {
+      food_path = path;
+      isFoodFound = true;
     }
-  );
+  });
   easystar.calculate();
 }
 
@@ -141,9 +68,9 @@ module.exports = function handleMove(request, response) {
   const head = self.body[0];
   const neck = self.body[1];
 
-  const nearestFood = findFoodDistances(food, self.body[0]);
+  const sortedFood = findFoodDistances(food, self.body[0]);
 
-  findPathToFood(nearestFood, snakes, self, boardWidth, boardHeight);
+  findPath(sortedFood[0].location, snakes, self, boardWidth, boardHeight);
 
   if (noPathFound === true) {
     for (const move of moves) {
@@ -164,7 +91,6 @@ module.exports = function handleMove(request, response) {
     });
   }
 
-  console.log('MOVE_CHOICE: ' + move);
   response.status(200).send({
     move: move,
   });
