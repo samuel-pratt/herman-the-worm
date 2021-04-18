@@ -137,10 +137,9 @@ module.exports = function handleMove(request, response) {
   console.log(result[0].x);
   console.log(result[0].y);
 
-  var move = coordAsMove(
-    { x: result[0].x, y: height - result[0].y },
-    snakeHead,
-  );
+  var move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
+
+  console.log(move);
 
   response.status(200).send({
     move: move,
