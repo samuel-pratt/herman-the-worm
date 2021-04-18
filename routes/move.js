@@ -99,6 +99,15 @@ module.exports = function handleMove(request, response) {
     });
   }*/
 
+  const width = gameData.board.width;
+  const height = gameData.board.height;
+  const food = gameData.board.food;
+  const snakes = gameData.board.snakes;
+  const self = gameData.you;
+
+  const head = self.body[0];
+  const neck = self.body[1];
+
   const sortedFood = findFoodDistances(food, self.body[0]);
 
   const snakeHead = self.body[0];
