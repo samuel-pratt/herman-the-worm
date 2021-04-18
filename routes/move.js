@@ -119,12 +119,12 @@ module.exports = function handleMove(request, response) {
 
   // Add other snakes to the board
   snakes.forEach((snake) =>
-    snake.body.forEach((element) => (board[element.y][element.x] = 0)),
+    snake.body.forEach((element) => (board[element.x][element.y] = 0)),
   );
 
   // Add self to board, not including head
   const selfBody = self.body.slice(1);
-  selfBody.forEach((element) => (board[element.y][element.x] = 0));
+  selfBody.forEach((element) => (board[element.x][element.y] = 0));
   console.log(board);
   var graph = new astar.Graph(board);
 
