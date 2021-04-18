@@ -137,7 +137,7 @@ module.exports = function handleMove(request, response) {
   console.log(result[0].x);
   console.log(result[0].y);
 
-  var move = coordAsMove(result[0].x, result[0].y);
+  var move = coordAsMove(result[0].x, height - result[0].y);
 
   response.status(200).send({
     move: move,
