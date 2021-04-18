@@ -128,12 +128,15 @@ module.exports = function handleMove(request, response) {
 
   var graph = new astar.Graph(board);
 
-  var result = astar.astar.search(graph, snakeHead, sortedFood[0].location);
+  var start = graph.grid[snakeHead.x][snakeHead.y];
+  var end = graph.grid[sortedFood[0].location.x][sortedFood[0].location.y];
+
+  var result = astar.astar.search(graph, start, end);
 
   console.log('Nearest food: ');
-  console.log(sortedFood[0].location);
+  console.log(end);
   console.log('Snake head: ');
-  console.log(snakeHead);
+  console.log(start);
   console.log('Result: ');
   console.log(result);
 
