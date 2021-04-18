@@ -8,6 +8,8 @@ const findFoodDistances = boardFunctions.findFoodDistances;
 const offBoard = boardFunctions.offBoard;
 const onSnakes = boardFunctions.onSnakes;
 
+const astar = require('../functions/pathfinding');
+
 const easystarjs = require('easystarjs');
 const easystar = new easystarjs.js();
 let food_path = [];
@@ -54,7 +56,7 @@ function findPath(destination, snakes, self, width, height) {
 }
 
 module.exports = function handleMove(request, response) {
-  isFoodFound = false;
+  /*isFoodFound = false;
   noPathFound = false;
 
   const gameData = request.body;
@@ -95,9 +97,31 @@ module.exports = function handleMove(request, response) {
     response.status(200).send({
       move: coordAsMove(food_path[1], self.body[0]),
     });
-  }
+  }*/
+
+  const sortedFood = findFoodDistances(food, self.body[0]);
+
+  const snakeHead = self.body[0];
+
+  // Create empty board array
+  let board = Array(height)
+    .fill()
+    .map(() => Array(width).fill(1));
+
+  // Add other snakes to the board
+  snakes.forEach((snake) =>
+    snake.body.forEach((element) => (board[element.y][element.x] = 0)),
+  );
+
+  // Add self to board, not including head
+  const selfBody = self.body.slice(1);
+  selfBody.forEach((element) => (board[element.y][element.x] = 0));
+
+  var graph = new astar.Graph(board);
+
+  var result = astar.search(graph, snakeHead, sortedFood[0].location);
 
   response.status(200).send({
-    move: move,
+    move: result,
   });
 };
