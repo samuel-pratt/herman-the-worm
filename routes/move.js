@@ -128,7 +128,7 @@ module.exports = function handleMove(request, response) {
 
   var graph = new astar.Graph(board);
 
-  var result = astar.search(graph, snakeHead, sortedFood[0].location);
+  var result = astar.astar.search(graph, snakeHead, sortedFood[0].location);
 
   console.log(result);
 
