@@ -130,9 +130,12 @@ module.exports = function handleMove(request, response) {
 
   var result = astar.astar.search(graph, snakeHead, sortedFood[0].location);
 
-  console.log('Nearest food: ' + sortedFood[0].location);
-  console.log('Snake head: ' + snakeHead);
-  console.log('Result: ' + result);
+  console.log('Nearest food: ');
+  console.log(sortedFood[0].location);
+  console.log('Snake head: ');
+  console.log(snakeHead);
+  console.log('Result: ');
+  console.log(result);
 
   response.status(200).send({
     move: result,
