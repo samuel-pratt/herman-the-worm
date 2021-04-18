@@ -133,14 +133,13 @@ module.exports = function handleMove(request, response) {
 
   var result = astar.astar.search(graph, start, end);
 
-  console.log('Nearest food: ');
-  console.log(end);
-  console.log('Snake head: ');
-  console.log(start);
   console.log('Result: ');
-  console.log(result);
+  console.log(result[0].x);
+  console.log(result[0].y);
+
+  var move = coordAsMove(result[0].x, result[0].y);
 
   response.status(200).send({
-    move: result,
+    move: move,
   });
 };
