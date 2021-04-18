@@ -98,7 +98,7 @@ module.exports = function handleMove(request, response) {
       move: coordAsMove(food_path[1], self.body[0]),
     });
   }*/
-
+  const gameData = request.body;
   const width = gameData.board.width;
   const height = gameData.board.height;
   const food = gameData.board.food;
