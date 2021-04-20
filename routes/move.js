@@ -45,9 +45,6 @@ module.exports = function handleMove(request, response) {
 
   if (result.length) {
     var move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
-    response.status(200).send({
-      move: move,
-    });
   } else {
     for (let i = selfBody.length - 1; i > 0; i--) {
       start = graph.grid[snakeHead.x][snakeHead.y];
@@ -57,9 +54,7 @@ module.exports = function handleMove(request, response) {
 
       if (result.length) {
         var move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
-        response.status(200).send({
-          move: move,
-        });
+        break;
       }
     }
   }
