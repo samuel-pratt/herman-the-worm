@@ -43,7 +43,7 @@ module.exports = function handleMove(request, response) {
 
   var result = astar.astar.search(graph, start, end);
 
-  if (result !== []) {
+  if (result.length) {
     var move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
     response.status(200).send({
       move: move,
