@@ -47,14 +47,19 @@ module.exports = function handleMove(request, response) {
     var move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
   } else {
     for (let i = selfBody.length - 1; i > 0; i--) {
-      start = graph.grid[snakeHead.x][snakeHead.y];
-      end = graph.grid[selfBody[i].x][selfBody[i].y];
+      board[selfBody[i].x][selfBody[i].y] = 1;
+      var graph_two = new astar.Graph(board);
 
-      result = astar.astar.search(graph, start, end);
+      start = graph_two.grid[snakeHead.x][snakeHead.y];
+      end = graph_two.grid[selfBody[i].x][selfBody[i].y];
+
+      result = astar.astar.search(graph_two, start, end);
       console.log(result);
       if (result.length) {
         var move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
         break;
+      } else {
+        board[selfBody[i].x][selfBody[i].y] = 0;
       }
     }
   }
