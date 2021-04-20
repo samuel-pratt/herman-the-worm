@@ -35,7 +35,7 @@ module.exports = function handleMove(request, response) {
   // Add self to board, not including head
   const selfBody = self.body.slice(1);
   selfBody.forEach((element) => (board[element.x][element.y] = 0));
-  console.log(board);
+
   var graph = new astar.Graph(board);
 
   var start = graph.grid[snakeHead.x][snakeHead.y];
@@ -51,14 +51,14 @@ module.exports = function handleMove(request, response) {
       end = graph.grid[selfBody[i].x][selfBody[i].y];
 
       result = astar.astar.search(graph, start, end);
-
+      console.log(result);
       if (result.length) {
         var move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
         break;
       }
     }
   }
-
+  console.log(move);
   response.status(200).send({
     move: move,
   });
