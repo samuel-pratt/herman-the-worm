@@ -45,7 +45,7 @@ module.exports = function handleMove(request, response) {
   var move;
 
   console.log(self.health);
-  if (self.health < 50) {
+  if (self.health > 50) {
     for (let i = selfBody.length - 1; i > 0; i--) {
       board[selfBody[i].x][selfBody[i].y] = 1;
       var graph_two = new astar.Graph(board);
