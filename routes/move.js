@@ -44,6 +44,12 @@ module.exports = function handleMove(request, response) {
   var result = astar.astar.search(graph, start, end);
   var move;
 
+  if (gameData.turn <= 4) {
+    move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
+    response.status(200).send({
+      move: move,
+    });
+  }
   console.log(self.health);
   if (self.health > 50) {
     for (let i = selfBody.length - 1; i > 0; i--) {
