@@ -42,9 +42,34 @@ module.exports = function handleMove(request, response) {
   var end = graph.grid[sortedFood[0].location.x][sortedFood[0].location.y];
 
   var result = astar.astar.search(graph, start, end);
+  var move;
 
-  if (result.length) {
-    var move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
+  if (gameData.turn <= 4) {
+    move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
+    response.status(200).send({
+      move: move,
+    });
+  }
+  console.log(self.health);
+  if (self.health > 50) {
+    for (let i = selfBody.length - 1; i > 0; i--) {
+      board[selfBody[i].x][selfBody[i].y] = 1;
+      var graph_two = new astar.Graph(board);
+
+      start = graph_two.grid[snakeHead.x][snakeHead.y];
+      end = graph_two.grid[selfBody[i].x][selfBody[i].y];
+
+      result = astar.astar.search(graph_two, start, end);
+      console.log(result);
+      if (result.length) {
+        move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
+        break;
+      } else {
+        board[selfBody[i].x][selfBody[i].y] = 0;
+      }
+    }
+  } else if (result.length) {
+    move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
   } else {
     for (let i = selfBody.length - 1; i > 0; i--) {
       board[selfBody[i].x][selfBody[i].y] = 1;
@@ -56,13 +81,14 @@ module.exports = function handleMove(request, response) {
       result = astar.astar.search(graph_two, start, end);
       console.log(result);
       if (result.length) {
-        var move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
+        move = coordAsMove({ x: result[0].x, y: result[0].y }, snakeHead);
         break;
       } else {
         board[selfBody[i].x][selfBody[i].y] = 0;
       }
     }
   }
+
   console.log(move);
   response.status(200).send({
     move: move,
