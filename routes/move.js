@@ -17,7 +17,7 @@ module.exports = function handleMove(request, response) {
   const height = gameData.board.height;
   const food = gameData.board.food;
   const snakes = gameData.board.snakes;
-  const self = gameData.you;
+  const you = gameData.you;
   const snakeHead = self.body[0];
 
   const sortedFood = findFoodDistances(food, self.body[0]);
@@ -44,7 +44,7 @@ module.exports = function handleMove(request, response) {
   var result = astar.astar.search(graph, start, end);
   var move;
 
-  if (self.health < 50) {
+  if (you.health < 50) {
     for (let i = selfBody.length - 1; i > 0; i--) {
       board[selfBody[i].x][selfBody[i].y] = 1;
       var graph_two = new astar.Graph(board);
